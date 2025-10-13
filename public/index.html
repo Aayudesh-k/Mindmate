@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate - Your Mental Health Companion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 MindMate</h1>
+            <p class="tagline">Your Personal Mental Health Companion</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <label for="language">Language:</label>
+                <select id="language">
+                    <option value="en-US">English</option>
+                    <option value="es-ES">Español</option>
+                    <option value="hi-IN">हिन्दी</option>
+                </select>
+            </div>
+
+            <!-- Mood Display -->
+            <div class="mood-display" id="moodDisplay">
+                <div class="mood-icon">😊</div>
+                <p class="mood-text">How are you feeling today?</p>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-message">
+                    <p>👋 Hello! I'm MindMate, your caring companion. Feel free to talk to me about anything on your mind. I'm here to listen and support you.</p>
+                </div>
+            </div>
+
+            <!-- Voice Controls -->
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">
+                    <span class="btn-icon">🎤</span>
+                    Start Talking
+                </button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>
+                    <span class="btn-icon">⏸️</span>
+                    Stop
+                </button>
+                <button id="typeBtn" class="btn btn-tertiary">
+                    <span class="btn-icon">⌨️</span>
+                    Type Instead
+                </button>
+                <!-- New: Mute button -->
+                <button id="muteBtn" class="btn btn-tertiary">
+                    <span class="btn-icon">🔊</span>
+                    Mute
+                </button>
+            </div>
+
+            <!-- Text Input (Hidden by default) -->
+            <div class="text-input-container" id="textInputContainer" style="display: none;">
+                <input type="text" id="textInput" placeholder="Type your message here...">
+                <button id="sendBtn" class="btn btn-primary">Send</button>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="status" id="status">
+                <span class="status-dot"></span>
+                <span class="status-text">Ready to listen</span>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Quick Support</h3>
+                <div class="action-buttons">
+                    <button class="action-btn" data-action="breathing">
+                        🫁 Breathing Exercise
+                    </button>
+                    <button class="action-btn" data-action="meditation">
+                        🧘 Quick Meditation
+                    </button>
+                    <button class="action-btn" data-action="affirmation">
+                        💪 Positive Affirmation
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mood History as Dropdown -->
+            <details class="mood-history">
+                <summary>Your Mood Journey</summary>
+                <div id="moodHistory" class="mood-history-items">
+                    <p class="empty-state">Start sharing to see detected moods here</p>
+                </div>
+            </details>
+        </div>
+
+        <footer>
+            <p>💚 Remember: You're not alone. MindMate is always here for you.</p>
+            <p class="disclaimer">This app provides support but is not a substitute for professional mental health care.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
