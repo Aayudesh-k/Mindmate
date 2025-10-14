@@ -2,8 +2,6 @@
 
 An offline-capable web app that listens to your voice or text, detects emotions, and provides empathetic support using Google's Gemini AI. Built for the Gemma 3n Hackathon, it's multilingual (English, Spanish, Hindi) and focuses on quick, caring interactions.
 
-![MindMate Demo](https://mindmate-2mjaq3hlq-aayudesh-kaparthis-projects.vercel.app/) ---
-
 ## ✨ Features
 
 - **Voice & Text Chat**: Speak or type to MindMate – it responds with tailored, empathetic advice.
