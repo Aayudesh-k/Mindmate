@@ -152,9 +152,9 @@ class MindMate {
         const emotion = this.detectEmotion(message);
         
         try {
-            console.log('Sending to Gemini API:', message);
+            console.log('Sending to API:', message);
             
-            // Call Gemini AI API
+            // Call API (Polinations or fallback)
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -172,7 +172,7 @@ class MindMate {
             }
 
             const data = await response.json();
-            console.log('Received from Gemini:', data);
+            console.log('Received from API:', data);
             
             // Remove typing indicator
             this.removeTypingIndicator();
@@ -235,12 +235,12 @@ class MindMate {
         return languageMap[this.currentLanguage] || 'English';
     }
 
-    // Updated: Multilingual emotion detection
+    // Updated: Multilingual emotion detection with improved Hindi support
     detectEmotion(text) {
-        const lowerText = text.toLowerCase();
+        const lowerText = text.toLowerCase().trim(); // Normalize
         const langCode = this.currentLanguage.split('-')[0]; // 'en', 'es', 'hi'
 
-        // Keyword maps for each language (expanded with common terms)
+        // Keyword maps for each language (expanded Hindi with transliterations)
         const emotionKeywords = {
             en: {
                 sad: ['sad', 'depressed', 'down', 'unhappy', 'crying', 'tears', 'miserable', 'lonely', 'hopeless', 'hurt', 'pain', 'heartbroken'],
@@ -263,14 +263,22 @@ class MindMate {
                 calm: ['calmado', 'tranquilo', 'relajado', 'sereno', 'contento', 'plácido']
             },
             hi: {
-                sad: ['दुख', 'उदास', 'दुखी', 'रोना', 'आंसू', 'निराश', 'अकेला', 'निराशावादी', 'चोट', 'दर्द', 'दिल टूटा'],
-                anxious: ['चिंतित', 'चिंता', 'तनाव', 'नर्वस', 'पैनिक', 'डर', 'भयभीत', 'अधिक भार', 'भयानक', 'भय'],
-                angry: ['गुस्सा', 'गुस्से', 'क्रोध', 'नाराज', 'चिढ़', 'क्रोधित', 'घृणा', 'उत्तेजित'],
-                happy: ['खुश', 'खुशी', 'उत्साहित', 'अद्भुत', 'शानदार', 'असाधारण', 'अच्छा', 'शानदार', 'फैंटास्टिक', 'प्यार', 'उज्ज्वल'],
-                tired: ['थका', 'थकान', 'निकास', 'थकित', 'थकान', 'नींद', 'जला हुआ'],
-                confused: ['भ्रमित', 'खोया', 'अनिश्चित', 'नहीं जानता', 'अनिश्चित', 'हैरान'],
-                grateful: ['आभारी', 'कृतज्ञ', 'आशीर्वादित', 'सराहना', 'भाग्यशाली', 'सौभाग्यशाली'],
-                calm: ['शांत', 'शांतिपूर्ण', 'आरामदायक', 'निश्चल', 'संतुष्ट', 'शांत']
+                sad: ['दुख', 'उदास', 'दुखी', 'रोना', 'आंसू', 'निराश', 'अकेला', 'निराशावादी', 'चोट', 'दर्द', 'दिल टूटा', // Native
+                    'dukhi', 'udaas', 'rona', 'aansu', 'niraash', 'akele', 'niraashavaadi', 'chot', 'dard', 'dil toota'], // Romanized transliterations
+                anxious: ['चिंतित', 'चिंता', 'तनाव', 'नर्वस', 'पैनिक', 'डर', 'भयभीत', 'अधिक भार', 'भयानक', 'भय', // Native
+                    'chintit', 'chinta', 'tanav', 'nervas', 'panic', 'dar', 'bhaybheet', 'adhik bhaar', 'bhayaanak', 'bhay'], // Romanized
+                angry: ['गुस्सा', 'गुस्से', 'क्रोध', 'नाराज', 'चिढ़', 'क्रोधित', 'घृणा', 'उत्तेजित', // Native
+                    'gussa', 'gusse', 'krodh', 'naraaz', 'chidh', 'krodhit', 'ghruna', 'uttejit'], // Romanized
+                happy: ['खुश', 'खुशी', 'उत्साहित', 'अद्भुत', 'शानदार', 'असाधारण', 'अच्छा', 'शानदार', 'फैंटास्टिक', 'प्यार', 'उज्ज्वल', // Native
+                    'khush', 'khushi', 'utsaahit', 'adbhut', 'shandaar', 'asaadhaaran', 'achcha', 'shandaar', 'fantastic', 'pyaar', 'ujjwal'], // Romanized
+                tired: ['थका', 'थकान', 'निकास', 'थकित', 'थकान', 'नींद', 'जला हुआ', // Native
+                    'thaka', 'thakaan', 'nikaas', 'thakit', 'thakaan', 'neend', 'jala hua'], // Romanized
+                confused: ['भ्रमित', 'खोया', 'अनिश्चित', 'नहीं जानता', 'अनिश्चित', 'हैरान', // Native
+                    'bhramit', 'khoya', 'anishchit', 'nahin jaanta', 'anishchit', 'hairaan'], // Romanized
+                grateful: ['आभारी', 'कृतज्ञ', 'आशीर्वादित', 'सराहना', 'भाग्यशाली', 'सौभाग्यशाली', // Native
+                    'aabhari', 'kritagya', 'aashirvaadit', 'saraahna', 'bhaagyaashali', 'saubhaagyaashali'], // Romanized
+                calm: ['शांत', 'शांतिपूर्ण', 'आरामदायक', 'निश्चल', 'संतुष्ट', 'शांत', // Native
+                    'shaant', 'shaantipoorna', 'aaraamdaayak', 'nishchal', 'santusht', 'shaant'] // Romanized
             }
         };
 
@@ -288,7 +296,7 @@ class MindMate {
         return 'neutral';
     }
 
-    // Updated: Quick actions now call Gemini API with variation for affirmations
+    // Updated: Quick actions now call API
     async handleQuickAction(action) {
         let prompt = '';
         switch (action) {
