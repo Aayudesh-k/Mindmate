@@ -1,6 +1,6 @@
 # MindMate
 
-🧠 **Your Personal AI Mental Health Companion** – An offline-capable web app that listens to your voice or text, detects emotions, and provides empathetic support using Pollinations.AI for free, unlimited responses. It's multilingual (English, Spanish, Hindi) with improved emotion detection across all languages and focuses on quick, caring interactions.
+🧠 **Your Personal AI Mental Health Companion** – An offline-capable web app that listens to your voice or text, detects emotions, and provides empathetic support using OpenAI GPT-5-mini, unlimited responses. It's multilingual (English, Spanish, Hindi) with improved emotion detection across all languages and focuses on quick, caring interactions.
 
 ## ✨ Features
 
