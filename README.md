@@ -1,6 +1,6 @@
 # MindMate
 
-🧠 **Your Personal AI Mental Health Companion** – An offline-capable web app that listens to your voice or text, detects emotions, and provides empathetic support using Pollinations.AI for free, unlimited responses. Built for the Gemma 3n Hackathon, it's multilingual (English, Spanish, Hindi) with improved emotion detection across all languages and focuses on quick, caring interactions.
+🧠 **Your Personal AI Mental Health Companion** – An offline-capable web app that listens to your voice or text, detects emotions, and provides empathetic support using Pollinations.AI for free, unlimited responses. It's multilingual (English, Spanish, Hindi) with improved emotion detection across all languages and focuses on quick, caring interactions.
 
 ## ✨ Features
 
@@ -19,7 +19,7 @@
 
 - **Frontend**: Vanilla JavaScript, HTML, CSS (no frameworks for lightweight).
 - **Backend**: Node.js with Express.js.
-- **AI**: Pollinations.AI (free, unlimited text generation; no API key needed).
+- **AI**: OpenAI GPT-5-mini Powers intelligent, empathetic responses. (Requires API key).
 - **Deployment**: Vercel (serverless).
 - **Other**: Web Speech API (recognition/synthesis), dotenv for env vars.
 
@@ -32,14 +32,21 @@ cd Mindmate
 2. **Install Dependencies**:
 npm install
 
-3. **Run Locally** (No API key needed!):
-npm start
-- Open [http://localhost:3000](http://localhost:3000).
+3. **Set up API Key** 
+You will need an API key from OpenAI API Keys.
+Create a file named .env in the root directory and add your key:
+  OPENAI_API_KEY=your_openai_key_here
 
-4. **Test**:
-- Click "Start Talking" or type a message (try Hindi: "main dukhi hoon").
-- Switch language, test emotion detection (emojis/gradients change).
-- Try quick actions like "Breathing Exercise".
+4. **Run Locally**:
+npm start
+Open your browser to http://localhost:3000.
+
+5. **Test**
+Click "Start Talking" or type a message.
+Try a multilingual input: Type in Hindi, e.g., "main dukhi hoon" (I am sad).
+Switch the language dropdown and test again.
+Test the emotion detection (watch the emojis/gradients change).
+Click the quick actions like "Breathing Exercise".
 
 ## 📱 Usage
 
@@ -54,7 +61,9 @@ For production, deploy to Vercel (see below).
 ## ☁️ Deployment (Vercel)
 
 1. **Connect GitHub Repo** to [Vercel](https://vercel.com).
-2. **No Env Vars Needed**: Pollinations.AI is keyless.
+2. **Environment Variable**:
+Go to your Vercel Dashboard > Settings > Environment Variables and add:
+  OPENAI_API_KEY: Your key.
 3. **Deploy**: Auto-builds on push. Get URL like `mindmate.vercel.app`.
 
 **Custom Domain**: Add in Vercel > Settings > Domains.
@@ -91,7 +100,7 @@ MindMate offers supportive chats but **is not medical advice**. For serious issu
 ## 🙏 Acknowledgments
 
 - Built with ❤️ for mental health awareness.
-- Powered by [Pollinations.AI](https://pollinations.ai) for free AI generation.
+- Powered by OpenAI for intelligent responses.
 
 **Questions?** Open an issue or chat in the repo. 💚
 
