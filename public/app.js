@@ -1,84 +1,30 @@
-// MindMate - Mental Health Companion App with Gemini AI
+// MindMate - Mental Health Companion App with OpenAI AI
 class MindMate {
     constructor() {
-        this.recognition = null;
-        this.isListening = false;
         this.currentLanguage = 'en-US';
         this.conversationHistory = [];
-        this.isMuted = false; // New: Track mute state
+        this.isMuted = false; // Track mute state
         
         this.init();
     }
 
     init() {
-        this.setupSpeechRecognition();
         this.setupEventListeners();
         this.showWelcomeMessage();
     }
 
-    setupSpeechRecognition() {
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            this.recognition = new SpeechRecognition();
-            this.recognition.continuous = true;
-            this.recognition.interimResults = true;
-            this.recognition.lang = this.currentLanguage;
-
-            this.recognition.onstart = () => {
-                this.updateStatus('Listening...', true);
-                document.getElementById('startBtn').disabled = true;
-                document.getElementById('stopBtn').disabled = false;
-                document.getElementById('startBtn').classList.add('recording');
-            };
-
-            this.recognition.onresult = (event) => {
-                let finalTranscript = '';
-                
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    }
-                }
-
-                if (finalTranscript) {
-                    this.handleUserInput(finalTranscript);
-                }
-            };
-
-            this.recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-                this.updateStatus('Error occurred. Please try again.', false);
-                this.stopListening();
-            };
-
-            this.recognition.onend = () => {
-                if (this.isListening) {
-                    this.recognition.start();
-                }
-            };
-        } else {
-            alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.');
-        }
-    }
-
     setupEventListeners() {
-        document.getElementById('startBtn').addEventListener('click', () => this.startListening());
-        document.getElementById('stopBtn').addEventListener('click', () => this.stopListening());
         document.getElementById('typeBtn').addEventListener('click', () => this.toggleTextInput());
         document.getElementById('sendBtn').addEventListener('click', () => this.sendTextMessage());
         document.getElementById('textInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.sendTextMessage();
         });
 
-        // New: Mute toggle listener
+        // Mute toggle listener
         document.getElementById('muteBtn').addEventListener('click', () => this.toggleMute());
 
         document.getElementById('language').addEventListener('change', (e) => {
             this.currentLanguage = e.target.value;
-            if (this.recognition) {
-                this.recognition.lang = this.currentLanguage;
-            }
         });
 
         document.querySelectorAll('.action-btn').forEach(btn => {
@@ -89,30 +35,12 @@ class MindMate {
         });
     }
 
-    startListening() {
-        if (this.recognition) {
-            this.isListening = true;
-            this.recognition.start();
-        }
-    }
-
-    stopListening() {
-        if (this.recognition) {
-            this.isListening = false;
-            this.recognition.stop();
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('stopBtn').disabled = true;
-            document.getElementById('startBtn').classList.remove('recording');
-            this.updateStatus('Ready to listen', false);
-        }
-    }
-
     toggleTextInput() {
         const container = document.getElementById('textInputContainer');
         container.style.display = container.style.display === 'none' ? 'flex' : 'none';
     }
 
-    // Updated: Toggle mute with immediate cancel
+    // Toggle mute with immediate cancel
     toggleMute() {
         this.isMuted = !this.isMuted;
         const btn = document.getElementById('muteBtn');
@@ -123,11 +51,9 @@ class MindMate {
             }
             btn.innerHTML = '<span class="btn-icon">🔇</span>Unmute';
             btn.classList.add('muted');
-            this.updateStatus('Muted', false);
         } else {
             btn.innerHTML = '<span class="btn-icon">🔊</span>Mute';
             btn.classList.remove('muted');
-            this.updateStatus('Ready to listen', false);
         }
     }
 
@@ -154,7 +80,7 @@ class MindMate {
         try {
             console.log('Sending to API:', message);
             
-            // Call API (Polinations or fallback)
+            // Call API
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -235,7 +161,7 @@ class MindMate {
         return languageMap[this.currentLanguage] || 'English';
     }
 
-    // Updated: Multilingual emotion detection with improved Hindi support
+    // Multilingual emotion detection with improved Hindi support
     detectEmotion(text) {
         const lowerText = text.toLowerCase().trim(); // Normalize
         const langCode = this.currentLanguage.split('-')[0]; // 'en', 'es', 'hi'
@@ -296,7 +222,7 @@ class MindMate {
         return 'neutral';
     }
 
-    // Updated: Quick actions now call API
+    // Quick actions now call API
     async handleQuickAction(action) {
         let prompt = '';
         switch (action) {
@@ -421,19 +347,6 @@ class MindMate {
         moodIcon.textContent = config.icon;
         moodText.textContent = config.text;
         moodDisplay.style.background = config.color;
-    }
-
-    updateStatus(text, isListening) {
-        const statusText = document.querySelector('.status-text');
-        const status = document.getElementById('status');
-        
-        statusText.textContent = text;
-        
-        if (isListening) {
-            status.classList.add('listening');
-        } else {
-            status.classList.remove('listening');
-        }
     }
 
     showWelcomeMessage() {

@@ -37,37 +37,23 @@
                 </div>
             </div>
 
-            <!-- Voice Controls -->
+            <!-- Text Input Controls -->
             <div class="controls">
-                <button id="startBtn" class="btn btn-primary">
-                    <span class="btn-icon">🎤</span>
-                    Start Talking
-                </button>
-                <button id="stopBtn" class="btn btn-secondary" disabled>
-                    <span class="btn-icon">⏸️</span>
-                    Stop
-                </button>
-                <button id="typeBtn" class="btn btn-tertiary">
+                <button id="typeBtn" class="btn btn-primary">
                     <span class="btn-icon">⌨️</span>
-                    Type Instead
+                    Type Message
                 </button>
-                <!-- New: Mute button -->
+                <!-- Mute button -->
                 <button id="muteBtn" class="btn btn-tertiary">
                     <span class="btn-icon">🔊</span>
                     Mute
                 </button>
             </div>
 
-            <!-- Text Input (Hidden by default) -->
-            <div class="text-input-container" id="textInputContainer" style="display: none;">
+            <!-- Text Input (Shown by default now) -->
+            <div class="text-input-container" id="textInputContainer">
                 <input type="text" id="textInput" placeholder="Type your message here...">
                 <button id="sendBtn" class="btn btn-primary">Send</button>
-            </div>
-
-            <!-- Status Indicator -->
-            <div class="status" id="status">
-                <span class="status-dot"></span>
-                <span class="status-text">Ready to listen</span>
             </div>
 
             <!-- Quick Actions -->
